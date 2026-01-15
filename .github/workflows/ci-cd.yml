@@ -42,5 +42,5 @@ jobs:
         env:
           PORT: ${{ secrets.VPS_PORT }}
         run: |
-          rsync -avz -e "\"ssh -p $PORT\"" --exclude '.git' --exclude '.github' ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/lamp-app
+          rsync -avz -e \""ssh -p $PORT"\" --exclude '.git' --exclude '.github' ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/lamp-app
           ssh -p $PORT ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd ~/lamp-app && docker compose pull && docker compose up -d --build"
