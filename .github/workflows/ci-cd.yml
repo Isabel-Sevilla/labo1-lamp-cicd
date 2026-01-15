@@ -32,8 +32,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Config SSH
-        env:
-          PORT: ${{ secrets.VPS_PORT }}
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
@@ -41,6 +39,8 @@ jobs:
           ssh-keyscan -p ${{ secrets.VPS_PORT }} -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
       - name: Test SSH connexion
+        env:
+          PORT: ${{ secrets.VPS_PORT }}
         run: ssh -o StrictHostKeyChecking=no -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "echo 'SSH OK' port=\$PORT"
 
       - name: Déploiement sur le VPS
