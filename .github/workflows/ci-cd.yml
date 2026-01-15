@@ -41,7 +41,7 @@ jobs:
       - name: Test SSH connexion
         env:
           PORT: ${{ secrets.VPS_PORT }}
-        run: ssh -o StrictHostKeyChecking=no -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "echo 'SSH OK' port=\$PORT"
+        run: ssh -o StrictHostKeyChecking=no -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "echo 'SSH OK' port=$PORT"
 
       - name: Déploiement sur le VPS
         env:
