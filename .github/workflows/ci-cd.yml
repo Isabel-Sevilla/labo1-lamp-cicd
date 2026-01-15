@@ -31,10 +31,10 @@ jobs:
       - name: Récupération du code
         uses: actions/checkout@v4
 
-        - name: Install rsync + sudo
-          run: |
-            sudo apt-get update –qq
-            sudo apt-get install -y rsync
+      - name: Install rsync + sudo
+        run: |
+          sudo apt-get update –qq
+          sudo apt-get install -y rsync
 
       - name: Config SSH
         run: |
