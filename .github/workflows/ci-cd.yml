@@ -33,7 +33,7 @@ jobs:
 
       - name: Install rsync + sudo
         run: |
-          sudo apt-get update –qq
+          sudo apt-get update -qq
           sudo apt-get install -y rsync
 
       - name: Config SSH
