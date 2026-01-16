@@ -37,7 +37,8 @@ jobs:
           echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -p ${{ secrets.VPS_PORT }} -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
-
+          echo "KNOWN_HOSTS"
+          cat  ~/.ssh/known_hosts
 
       - name: Install rsync FORCE
         run: |
@@ -53,9 +54,9 @@ jobs:
 #          which rsync
 #          echo "PATH=$PATH" >> $GITHUB_PATH  # Persiste pour steps suivants
 
-      - name: Déploiement sur le VPS
-        run: |
-          /usr/bin/rsync -avz -e "ssh -p ${{ secrets.VPS_PORT }}" --exclude='.git' --exclude='.github' ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/lamp-app
+#      - name: Déploiement sur le VPS
+#        run: |
+#          rsync -avz -e "ssh -p ${{ secrets.VPS_PORT }}" --exclude='.git' --exclude='.github' ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/lamp-app
 
       - name: Redémarrage de Docker
         run: |
