@@ -40,7 +40,8 @@ jobs:
 
       - name: Test binary rsync
         run: |
-            echo "PATH=$PATH" >> $GITHUB_PATH  # Persiste pour steps suivants
+          echo $PATH
+#          echo "PATH=$PATH" >> $GITHUB_PATH  # Persiste pour steps suivants
 
 #      - name: Déploiement sur le VPS
 #        run: |
