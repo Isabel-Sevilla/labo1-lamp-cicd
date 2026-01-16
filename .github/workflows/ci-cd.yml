@@ -38,25 +38,25 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -p ${{ secrets.VPS_PORT }} -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
-
-      - name: Install rsync FORCE
-        run: |
+#
+#      - name: Install rsync FORCE
+#        run: |
           sudo apt-get update -qq
           sudo apt-get purge -y rsync || true
           sudo apt-get install -y rsync
           /usr/bin/rsync --version  # Doit afficher 3.x.x
-
+#
 #      - name: Test binary rsync
 #        run: |
           echo "PATH=$PATH"
           echo "RSYNC="
           which rsync
 #          echo "PATH=$PATH" >> $GITHUB_PATH  # Persiste pour steps suivants
-
+#
 #      - name: Déploiement sur le VPS
 #        run: |
           /usr/bin/rsync -avz -e "ssh -p ${{ secrets.VPS_PORT }}" --exclude='.git' --exclude='.github' ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/lamp-app
-
+#
       - name: Redémarrage de Docker
         run: |
           ssh -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd ~/lamp-app && docker compose pull && docker compose up -d --build"
