@@ -41,15 +41,14 @@ jobs:
       - name: Test binary rsync
         run: |
           echo "PATH=$PATH"
-          ls /usr/bin/rsync
           echo "RSYNC="
           which rsync
 #          echo "PATH=$PATH" >> $GITHUB_PATH  # Persiste pour steps suivants
 
-#      - name: Déploiement sur le VPS
-#        run: |
-#          rsync -avz -e "ssh -p ${{ secrets.VPS_PORT }}" --exclude='.git' --exclude='.github' ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/lamp-app
+      - name: Déploiement sur le VPS
+        run: |
+          /usr/bin/rsync -avz -e "ssh -p ${{ secrets.VPS_PORT }}" --exclude='.git' --exclude='.github' ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/lamp-app
 
-#      - name: Redémarrage de Docker
-#        run: |
-#          ssh -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd ~/lamp-app && docker compose pull && docker compose up -d --build"
+      - name: Redémarrage de Docker
+        run: |
+          ssh -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd ~/lamp-app && docker compose pull && docker compose up -d --build"
