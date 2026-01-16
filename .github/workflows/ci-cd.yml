@@ -38,8 +38,8 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -p ${{ secrets.VPS_PORT }} -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
-        - name: Test binary rsync
-          run: |
+      - name: Test binary rsync
+        run: |
             echo "PATH=$PATH" >> $GITHUB_PATH  # Persiste pour steps suivants
 
 #      - name: Déploiement sur le VPS
