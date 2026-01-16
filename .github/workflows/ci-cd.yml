@@ -40,12 +40,12 @@ jobs:
           echo "KNOWN_HOSTS"
           cat  ~/.ssh/known_hosts
 
-      - name: Install rsync FORCE
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get purge -y rsync || true
-          sudo apt-get install -y rsync
-          /usr/bin/rsync --version  # Doit afficher 3.x.x
+#      - name: Install rsync FORCE
+#        run: |
+#          sudo apt-get update -qq
+#          sudo apt-get purge -y rsync || true
+#          sudo apt-get install -y rsync
+#          /usr/bin/rsync --version  # Doit afficher 3.x.x
 
 #      - name: Test binary rsync
 #        run: |
