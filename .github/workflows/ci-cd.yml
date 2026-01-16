@@ -36,28 +36,14 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -p ${{ secrets.VPS_PORT }} -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
-          echo "KNOWN_HOSTS"
-          cat  ~/.ssh/known_hosts
-
-#      - name: Install rsync FORCE
-#        run: |
-#          sudo apt-get update -qq
-#          sudo apt-get purge -y rsync || true
-#          sudo apt-get install -y rsync
-#          /usr/bin/rsync --version  # Doit afficher 3.x.x
-
-#      - name: Test binary rsync
-#        run: |
-#          echo "PATH=$PATH"
-#          echo "RSYNC="
-#          which rsync
-#          echo "PATH=$PATH" >> $GITHUB_PATH  # Persiste pour steps suivants
+#          ssh-keyscan -p ${{ secrets.VPS_PORT }} -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
       - name: Déploiement sur le VPS
         run: |
-          rsync -avz -e "ssh -p ${{ secrets.VPS_PORT }}" --exclude='.git' --exclude='.github' ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/lamp-app
-
+#          rsync -avz -e "ssh -p ${{ secrets.VPS_PORT }}" --exclude='.git' --exclude='.github' ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/lamp-app
+          rsync -avz --exclude='.git' --exclude='.github' ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/lamp-app
       - name: Redémarrage de Docker
         run: |
-          ssh -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd ~/lamp-app && docker compose pull && docker compose up -d --build"
+#          ssh -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd ~/lamp-app && docker compose pull && docker compose up -d --build"
+          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd ~/lamp-app && docker compose pull && docker compose up -d --build"
