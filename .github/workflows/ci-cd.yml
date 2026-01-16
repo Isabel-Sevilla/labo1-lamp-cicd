@@ -40,9 +40,9 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y rsync
           echo "=== Test SSH ==="
-          ssh -p ${{ secrets.VPS_PORT }} -o StrictHostKeyChecking=no -o ConnectTimeout=10 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "echo 'SSH OK'; pwd; ls -la ~/"
-          echo "=== Rsync ==="
-          rsync -avz --dry-run -e "ssh -p ${{ secrets.VPS_PORT }}" --exclude='.git' --exclude='.github' ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/lamp-app/
+          ssh -vvv -p ${{ secrets.VPS_PORT }} -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "echo 'SSH OK'; pwd; ls -la ~/"
+#          echo "=== Rsync ==="
+#          rsync -avz --dry-run -e "ssh -p ${{ secrets.VPS_PORT }}" --exclude='.git' --exclude='.github' ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/lamp-app/
 
       - name: Redémarrage de Docker
         run: |
