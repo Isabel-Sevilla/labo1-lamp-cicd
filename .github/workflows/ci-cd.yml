@@ -54,9 +54,9 @@ jobs:
 #          which rsync
 #          echo "PATH=$PATH" >> $GITHUB_PATH  # Persiste pour steps suivants
 
-#      - name: Déploiement sur le VPS
-#        run: |
-#          rsync -avz -e "ssh -p ${{ secrets.VPS_PORT }}" --exclude='.git' --exclude='.github' ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/lamp-app
+      - name: Déploiement sur le VPS
+        run: |
+          rsync -avz -e "ssh -p ${{ secrets.VPS_PORT }}" --exclude='.git' --exclude='.github' ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/lamp-app
 
       - name: Redémarrage de Docker
         run: |
