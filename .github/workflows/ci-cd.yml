@@ -31,19 +31,16 @@ jobs:
       - name: Récupération du code
         uses: actions/checkout@v4
 
-      - name: Config SSH + Install rsync + Déploiement sur le VPS
+      - name: Config SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -p ${{ secrets.VPS_PORT }} -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
-          sudo apt-get update -qq
-          sudo apt-get install -y rsync
-          echo "=== Test SSH ==="
-          ssh -vvv  -i ~/.ssh/id_rsa -p ${{ secrets.VPS_PORT }} -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "echo 'SSH OK'; pwd; ls -la ~/"
-#          echo "=== Rsync ==="
-#          rsync -avz --dry-run -e "ssh -p ${{ secrets.VPS_PORT }}" --exclude='.git' --exclude='.github' ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/lamp-app/
 
+      - name: Déploiement sur le VPS
+        run: |
+          rsync -avz -e "ssh -p ${{ secrets.VPS_PORT }}" --exclude='.git' --exclude='.github' ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/lamp-app
       - name: Redémarrage de Docker
         run: |
-          ssh  -i ~/.ssh/id_rsa -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd ~/lamp-app && docker compose pull && docker compose up -d --build"
+          ssh -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "cd ~/lamp-app && docker compose pull && docker compose up -d --build"
