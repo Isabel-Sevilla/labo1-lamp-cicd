@@ -15,12 +15,10 @@ jobs:
       - name: Login to GHCR
         run:  echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Lowercase owner
+      - name: Build image
         run: |
           OWNER_LC=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-
-      - name: Build image
-        run: docker build -t ghcr.io/$OWNER_LC/lamp-app:latest ./lamp
+          docker build -t ghcr.io/$OWNER_LC/lamp-app:latest ./lamp
 
       - name: Push image
         run: docker push ghcr.io/$OWNER_LC/lamp-app:latest
