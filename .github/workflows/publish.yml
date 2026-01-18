@@ -17,8 +17,7 @@ jobs:
 
       - name: Lowercase owner
         run: |
-          OWNER_LC="${{ github.repository_owner,, }}"
-          echo "OWNER_LC=$OWNER_LC" >> $GITHUB_ENV
+          OWNER_LC=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
 
       - name: Build image
         run: docker build -t ghcr.io/$OWNER_LC/lamp-app:latest ./lamp
