@@ -12,6 +12,9 @@ jobs:
       - name: Récupération du code
         uses: actions/checkout@v4
 
+      - name: Login GHCR
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
       - name: Pull des containers
         run: docker compose -f docker-compose-GHCR.yml pull
 
