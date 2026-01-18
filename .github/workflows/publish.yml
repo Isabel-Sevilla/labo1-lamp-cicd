@@ -21,7 +21,7 @@ jobs:
           echo "OWNER_LC=$OWNER_LC" >> $GITHUB_ENV
 
       - name: Build image
-        run: docker build -t ghcr.io/${{ github.repository_owner }}/lamp-app:latest ./lamp
+        run: docker build -t ghcr.io/$OWNER_LC/lamp-app:latest ./lamp
 
       - name: Push image
-        run: docker push ghcr.io/${{ github.repository_owner }}/lamp-app:latest
+        run: docker push ghcr.io/$OWNER_LC/lamp-app:latest
