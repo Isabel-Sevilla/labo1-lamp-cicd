@@ -17,7 +17,7 @@ jobs:
 
       - name: Build image
         run: |
-          docker build -t ghcr.io/isabel-sevilla/lamp-app:latest ./lamp
+          docker build -t ghcr.io/${{ github.repository_owner }}/lamp-app:latest ./lamp
 
       - name: Push image
-        run: docker push ghcr.io/isabel-sevilla/lamp-app:latest
+        run: docker push ghcr.io/${{ github.repository_owner }}/lamp-app:latest
