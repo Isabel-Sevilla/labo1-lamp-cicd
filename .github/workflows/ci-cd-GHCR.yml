@@ -1,4 +1,4 @@
-name: CI/CD GHCR LAMP Docker
+name: CI/CD GHCR deploy LAMP Docker on VPS server
 
 on:
   push:
